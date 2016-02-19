@@ -11,11 +11,9 @@ function Point(x,y,r,color_RGBA){
     addEventListener("mousedown",function(e){
         mouseX = e.clientX-rect.left
         mouseY = e.clientY-rect.top;
-        console.log(dist(mouseX,mouseY,self.x,self.y));
         if(dist(mouseX,mouseY,self.x,self.y) < self.r){
             drag = true;
         }
-        console.log(drag)
     });
     
     
@@ -24,15 +22,22 @@ function Point(x,y,r,color_RGBA){
     })
     
 
-    addEventListener("mousemove",function(e){
-        console.log("hallooo",drag)
-        if(drag){    
-            mouseX = e.clientX-rect.left
-            mouseY = e.clientY-rect.top;
-        }
+    addEventListener("mousemove",function(e){ 
+        mouseX = e.clientX-rect.left
+        mouseY = e.clientY-rect.top;
+        if(dist(mouseX,mouseY,self.x,self.y) < self.r){
+           canvas.style.cursor = "pointer"
+        } else{
+            canvas.style.cursor = "auto"
+        };
     });
     
-    
+    this.update =function(){
+        if(drag){
+            this.x = mouseX;
+            this.y = mouseY;
+        }
+    };
     
     this.draw = function(context){
         context.beginPath();
